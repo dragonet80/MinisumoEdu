@@ -20,7 +20,7 @@
  * Aquests valors l'utilitzarem per a controlar els motors i les pauses
  */
 #define duracio 2000
-#define pausa 3000
+#define pausa 4000
 #define velo 127
  /*
   * Definim les direccions del motor. Dependrà de com hem col·locat els cables
@@ -48,11 +48,22 @@ void setup() {
 
 void loop() {
   /*
-   * Fem anar el robot endavant durant 2 segons i després l'aturem durant 3 segons.
+   * Esperarem a pulsar el botó per a tornar a començar
    */
-  Serial.println("Robot endavant.");
-  Serial.println("Si alguna roda gira en sentit contrari hi ha que canviar els cables del motor al connector del driver");
-  Serial.println("Si el robot no va recte és que un motor va més forçat que l'altre i més endavant haurem de adjustar cada velocitat individualment");
+  Serial.println("Pulsa el botó per a començar.");
+  while(digitalRead(boto)==LOW);  // No fem res, simplement tornem a llegir el botó
+  Serial.println("Ok");
+  while(digitalRead(boto)==HIGH); // Esperem a que el botó es deixi d'apretar
+  Serial.println("");
+  delay(pausa);
+  /*
+   * Fem anar el robot endavant i després l'aturem
+   */
+  Serial.println("*El Robot va ENDAVANT.");
+  Serial.println(" Si alguna roda gira en sentit contrari hi ha que canviar els cables");
+  Serial.println(" del motor al connector del driver");
+  Serial.println(" Si el robot no va recte és que un motor va més forçat que l'altre i");
+  Serial.println(" més endavant haurem de adjustar cada velocitat individualment");
   MotorE_Moviment(AVANT, velo);
   MotorD_Moviment(AVANT, velo);
   delay(duracio);
@@ -60,10 +71,11 @@ void loop() {
   MotorD_Moviment(AVANT, 0);
   delay(pausa);
   /*
-   * Fem anar el robot endarrere durant 2 segons i després l'aturem durant 3 segons.
+   * Fem anar el robot endarrere i després l'aturem
    */
-  Serial.println("Robot endarrera.");
-  Serial.println("Si el robot no va recte és que un motor va més forçat que l'altre i més endavant haurem de adjustar cada velocitat individualment");
+  Serial.println("*El Robot va ENDARRERE.");
+  Serial.println(" Si el robot no va recte és que un motor va més forçat que l'altre i");
+  Serial.println(" més endavant haurem de adjustar cada velocitat individualment");
   MotorE_Moviment(ARRERE, velo);
   MotorD_Moviment(ARRERE, velo);
   delay(duracio);
@@ -71,10 +83,11 @@ void loop() {
   MotorD_Moviment(ARRERE, 0);
   delay(pausa);
   /*
-   * Fem rotar el robot cap a l'esquerra durant 2 segons i després l'aturem durant 3 segons.
+   * Fem rotar el robot cap a l'esquerra i després l'aturem
    */
-  Serial.println("Robot rota a l'esquerra.");
-  Serial.println("Si el robot rota a la dreta hi ha que canviar els cables del motor A pels del B.");
+  Serial.println("*El Robot ROTA a l'ESQUERRA.");
+  Serial.println(" Si el robot rota a la dreta hi ha que canviar els cables del motor");
+  Serial.println(" Esquerra pels del Dret.");
   MotorE_Moviment(ARRERE, velo);
   MotorD_Moviment(AVANT, velo);
   delay(duracio);
@@ -82,9 +95,9 @@ void loop() {
   MotorD_Moviment(AVANT, 0);
   delay(pausa);
   /*
-   * Fem rotar el robot cap a la dreta durant 2 segons i després l'aturem durant 3 segons.
+   * Fem rotar el robot cap a la dreta i després l'aturem
    */
-  Serial.println("Robot rota a la dreta.");
+  Serial.println("*El Robot ROTA a la DRETA.");
   MotorE_Moviment(AVANT, velo);
   MotorD_Moviment(ARRERE, velo);
   delay(duracio);
@@ -94,10 +107,13 @@ void loop() {
   /*
    * Esperarem a pulsar el botó per a tornar a començar
    */
+  Serial.println("");
   Serial.println("Pulsa el botó per a tornar a començar.");
   while(digitalRead(boto)==LOW);  // No fem res, simplement tornem a llegir el botó
   Serial.println("Ok");
   while(digitalRead(boto)==HIGH); // Esperem a que el botó es deixi d'apretar
+  Serial.println("");
+  delay(pausa);
 }
 
 /*
